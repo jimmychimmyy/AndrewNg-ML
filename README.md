@@ -1,0 +1,1 @@
+This is a collection of the programming assignments from Andrew Kang's ML course.
