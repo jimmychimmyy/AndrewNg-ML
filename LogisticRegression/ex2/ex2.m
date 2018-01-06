@@ -45,6 +45,9 @@ ylabel('Exam 2 score')
 legend('Admitted', 'Not admitted')
 hold off;
 
+%ans = sigmoid(0);		% used to debug sigmoid funtion
+%ans
+
 fprintf('\nProgram paused. Press enter to continue.\n');
 pause;
 
