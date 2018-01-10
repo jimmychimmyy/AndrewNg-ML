@@ -16,7 +16,7 @@ grad = zeros(size(theta));
 
 fprintf('size of theta: ');
 size(theta)
-%theta
+theta
 fprintf('\n');
 
 % ====================== YOUR CODE HERE ======================
@@ -38,17 +38,17 @@ J = sum/m;		% get mean
 
 % gradient
 
-%for iter = 1:columns(theta)
-	sum2 = 0;		% init sum2
-	for i = 1:m
-		%sum2 += ((theta(1) + theta(2) * X(i, 1)) - y(i)) * X(i, 1);
-		sum2 += ((1/(1/(1/e^(theta(1)+theta(2)*X(i, 1))))) - y(i)) * X(i, 1);
-	endfor
-	for i = 1:rows(theta)
-		grad(i) = sum2/m; 	% get 
-	endfor
-%endfor
-
+sum1 = 0;
+sum2 = 0;
+sum3 = 0;
+for i = 1:m
+	sum1 += ((1/(1+(1/e^(theta(1)+theta(2)*X(i, 2)+theta(3)*X(i, 3))))) - y(i)) * X(i, 1);
+	sum2 += ((1/(1+(1/e^(theta(1)+theta(2)*X(i, 2)+theta(3)*X(i, 3))))) - y(i)) * X(i, 2);
+	sum3 += ((1/(1+(1/e^(theta(1)+theta(2)*X(i, 2)+theta(3)*X(i, 3))))) - y(i)) * X(i, 3);
+	endfor;
+grad(1) = sum1/m;
+grad(2) = sum2/m;
+grad(3) = sum3/m;
 
 % =============================================================
 
