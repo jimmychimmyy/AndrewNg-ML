@@ -74,7 +74,12 @@ pause;
 fprintf('\nTraining One-vs-All Logistic Regression...\n')
 
 lambda = 0.1;
-[all_theta] = oneVsAll(X, y, num_labels, lambda);
+[all_theta] = oneVsAll(X, y, num_labels, lambda); % should return matrix of size 10 x N
+
+%size(all_theta) % should be 10 x N
+
+%all_theta
+%size(all_theta) % size(all_theta) = 401x1
 
 fprintf('Program paused. Press enter to continue.\n');
 pause;
@@ -85,4 +90,6 @@ pause;
 pred = predictOneVsAll(all_theta, X);
 
 fprintf('\nTraining Set Accuracy: %f\n', mean(double(pred == y)) * 100);
-
+%pred == y
+%pred
+%y

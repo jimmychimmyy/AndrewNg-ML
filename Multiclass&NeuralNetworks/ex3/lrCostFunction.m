@@ -37,12 +37,11 @@ grad = zeros(size(theta));
 %
 
 % === Cost ==== %
-
 h = sigmoid(X*theta);
 r = @(j) j.^2;
 regularization = lambda/(2*m) * sum(r(theta(2:end)));
 
-J = (1/m) * (-y' * log(h) - (1 - y)' * log(1 - h)) + regularization;
+J = (1/m) .* (-y' * log(h) - (1 - y)' * log(1 - h)) + regularization;
 
 %theta
 %X
@@ -54,9 +53,9 @@ partial0 = (1/m) * X' * (h - y);
 partialj = ((1/m) * X' * (h - y)) + lambda/m * theta;
 
 grad(1) = partial0(1);
-grad(2) = partialj(2);
-grad(3) = partialj(3);
-grad(4) = partialj(4);
+for i = 2:size(theta)
+	grad(i) = partialj(i);
+end
 
 
 % =============================================================

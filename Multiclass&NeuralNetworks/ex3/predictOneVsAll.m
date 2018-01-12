@@ -9,7 +9,7 @@ function p = predictOneVsAll(all_theta, X)
 %  for 4 examples) 
 
 m = size(X, 1);
-num_labels = size(all_theta, 1);
+num_labels = size(all_theta, 1);		% all_theta = 10, num_labels = 10
 
 % You need to return the following variables correctly 
 p = zeros(size(X, 1), 1);
@@ -30,11 +30,27 @@ X = [ones(m, 1) X];
 %       for each row.
 %       
 
+% return a vector of preditions for each ex in the matrix X
+% X contains the ex in rows, X is a 5000x401 matrix
+% p is 401x1 vector
+% all_theta is 10x401
+% we want 401x something matrix so either X'*all_theta 401x5000 * 10*401
+% 
 
+h = sigmoid(X*all_theta'); % h is size 5000 x 10
 
+% we want to get the index of the column that p(i) is coming from
 
+p = max(h, [], 2);
 
-
+for i = 1:m
+	row = h(i, :);
+	for j = 1:num_labels
+		if (p(i) == h(i, j))
+			p(i) = j;
+		end
+	end
+end
 
 % =========================================================================
 
