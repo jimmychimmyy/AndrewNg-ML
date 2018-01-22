@@ -62,17 +62,70 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+%size(Theta1)		% 25x401
+%size(Theta2)		% 10x26
+%size(X)			% 5000x400
+%size(y)			% 5000x1
+%num_labels			% 10
+%m 					% 5000
+
+% === get hypothesis === %
+bias = ones(size(X, 1), 1);				% create bias vector 
+X = horzcat(bias, X);					% add bias to X (= a1) -> 5000x401
+a2 = sigmoid(X*Theta1');				% a2 is 5000x401 * 401x25 = 5000x25
+
+bias2 = ones(size(a2, 1), 1);			% create bias vector
+a2 = horzcat(bias2, a2);				% add bias to a2 -> 5000x26
+h = sigmoid(Theta2*a2');				% 10x26 * 26x5000 = 10x5000
 
 
+%size(h)			% 10x5000
+% should i take the transpose of x?
+% then get the max of each row?
+% and create 10 dimensional vectors using the position of the max
+%	 of each row as 1 and the other positions as 0?
 
+% === calculate cost === %
+result = zeros(size(h));		% 10x5000
 
+for i = 1:m
+	result(y(i), i) = 1;
+end
 
+total = 0;
+for j = 1:m
+	total += -result(:, j)' * log(h(:, j)) - (1 - result(:, j)') * log(1 - h(:, j));
+end
+J += (total/m);
 
+%{
+for i = 1:num_labels
+	cost = 0;
+	for j = 1:m
+		cost += (-(ans(i, j))' * log(h(:, j)) - (1 - (ans(i, j))') * log(1 - h(:, j)));
+		i
+		j
+	end
+	J += cost/m;
+end
+%}
 
+%size(J)
 
+%for i = 1:m
+	%maxes = max(h', [], 2); % get max of every row in h', there will be 5000
+%end
 
+%for i = 1:num_labels
+	%sum_j = 0;
+	%for j = 1:m
 
+	%end
+	%J += (1/m) * 
+	%J += ((1/m) * (-y' * log(h') - (1 - y') * log(1 - h')));
+%end
 
+%size(J) 		% 1x10
 
 
 
