@@ -98,39 +98,24 @@ for j = 1:m
 end
 J += (total/m);
 
-%{
-for i = 1:num_labels
-	cost = 0;
-	for j = 1:m
-		cost += (-(ans(i, j))' * log(h(:, j)) - (1 - (ans(i, j))') * log(1 - h(:, j)));
-		i
-		j
+% === calcualte regularization === %
+theta1 = Theta1(:, 2:end);
+theta2 = Theta2(:, 2:end);
+
+total = 0;
+for i = 1:size(theta1, 1)
+	for j = 1:size(theta1', 1)
+		total += theta1(i, j)^2;
 	end
-	J += cost/m;
 end
-%}
 
-%size(J)
+for i = 1:size(theta2, 1)
+	for j = 1:size(theta2', 1)
+		total += theta2(i, j)^2;
+	end
+end
 
-%for i = 1:m
-	%maxes = max(h', [], 2); % get max of every row in h', there will be 5000
-%end
-
-%for i = 1:num_labels
-	%sum_j = 0;
-	%for j = 1:m
-
-	%end
-	%J += (1/m) * 
-	%J += ((1/m) * (-y' * log(h') - (1 - y') * log(1 - h')));
-%end
-
-%size(J) 		% 1x10
-
-
-
-
-
+J += (lambda/(2*m)) * total;
 
 
 % -------------------------------------------------------------
