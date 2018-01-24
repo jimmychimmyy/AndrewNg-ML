@@ -71,12 +71,16 @@ Theta2_grad = zeros(size(Theta2));
 
 % === get hypothesis === %
 bias = ones(size(X, 1), 1);				% create bias vector 
-X = horzcat(bias, X);					% add bias to X (= a1) -> 5000x401
-a2 = sigmoid(X*Theta1');				% a2 is 5000x401 * 401x25 = 5000x25
+a1 = horzcat(bias, X);					% add bias to X (= a1) -> 5000x401
+z2 = (a1*Theta1');
+a2 = sigmoid(z2);
+%a2 = sigmoid(X*Theta1');				% a2 is 5000x401 * 401x25 = 5000x25
 
 bias2 = ones(size(a2, 1), 1);			% create bias vector
 a2 = horzcat(bias2, a2);				% add bias to a2 -> 5000x26
-h = sigmoid(Theta2*a2');				% 10x26 * 26x5000 = 10x5000
+z3 = Theta2*a2';
+h = sigmoid(z3);
+%h = sigmoid(Theta2*a2');				% 10x26 * 26x5000 = 10x5000
 
 
 %size(h)			% 10x5000
@@ -116,6 +120,52 @@ for i = 1:size(theta2, 1)
 end
 
 J += (lambda/(2*m)) * total;
+
+
+% === backpropagation === %
+for t = 1:m
+
+	% === perform feedforward === %
+
+	% add bias term to layer a1
+	a_1 = X(m, :)';
+	a_1 = [1;a_1];
+	%size(a_1)		%401x1
+
+	z_2 = Theta1*a_1;
+	a_2 = sigmoid(z_2);
+	%size(a_2)		% 25x1
+
+	% add bias term to layer a2
+	a_2 = [1; a_2];
+	%size(a_2)		%26x1
+
+	z_3 = Theta2*a_2;
+	a_3 = sigmoid(z_3);
+	%size(a_3)		%10x1
+
+	% === calculate delta at output layer === %
+
+	delta_3 = zeros(size(a_3));
+	%size(delta_3)		% 10x1
+
+	for k = 1:size(a_3(:, 1))
+		%a_3(k, :)
+		%y(t) == k
+		%a_3(k) - (y(t) == k)
+		delta_3(k) = (a_3(k) - (y(t) == k));
+	end
+
+	z_2 = [1; z_2];		% not sure this is correct, but its the only way for the line below to run
+	delta_2 = (Theta2' * delta_3) .* sigmoidGradient(z_2);
+
+	%size(delta_2)		%26x1
+	delta_2 = delta_2(2:end);		% remove bias
+
+	delta_matrix = 0;
+	delta_matrix += ;					% this is large delta matrix
+
+end
 
 
 % -------------------------------------------------------------

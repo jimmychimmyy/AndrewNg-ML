@@ -19,12 +19,17 @@ W = zeros(L_out, 1 + L_in);
 % Note: The first column of W corresponds to the parameters for the bias unit
 %
 
+% randomly init the weights to small values
+epsilon_init = 0.12;
+W = rand(L_out, 1 + L_in) * 2 * epsilon_init - epsilon_init;
 
+%{
+	one effective strategy for choosing initial epsilon
+	is to base it on te number of unit (nodes?) in the network
 
-
-
-
-
+	ex. a good choice of initial epsilon = 6^(1/2) over (L_in + L_out)^(1/2)
+	where L_in and L_out are the number of units in layers adjacent to Theta_l
+%}
 
 
 % =========================================================================
