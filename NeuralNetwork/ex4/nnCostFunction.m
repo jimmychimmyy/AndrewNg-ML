@@ -162,8 +162,11 @@ for t = 1:m
 	%size(delta_2)		%26x1
 	delta_2 = delta_2(2:end);		% remove bias
 
-	delta_matrix = 0;
-	delta_matrix += ;					% this is large delta matrix
+	delta_matrix_1 = zeros(size(delta_2*a_1'));
+	delta_matrix_2 = zeros(size(delta_3*a_2'));
+
+	delta_matrix_1 += delta_2*a_1';
+	delta_matrix_2 += delta_3*a_2';
 
 end
 
