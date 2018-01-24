@@ -121,14 +121,15 @@ end
 
 J += (lambda/(2*m)) * total;
 
+delta_matrix_1 = zeros(size(Theta1_grad));
+delta_matrix_2 = zeros(size(Theta2_grad));
 
 % === backpropagation === %
 for t = 1:m
 
 	% === perform feedforward === %
-
 	% add bias term to layer a1
-	a_1 = X(m, :)';
+	a_1 = X(t, :)';
 	a_1 = [1;a_1];
 	%size(a_1)		%401x1
 
@@ -162,14 +163,19 @@ for t = 1:m
 	%size(delta_2)		%26x1
 	delta_2 = delta_2(2:end);		% remove bias
 
-	delta_matrix_1 = zeros(size(delta_2*a_1'));
-	delta_matrix_2 = zeros(size(delta_3*a_2'));
+	% ok, at this point I am recreating new delta_matrices each iteration .. 
 
-	delta_matrix_1 += delta_2*a_1';
-	delta_matrix_2 += delta_3*a_2';
+	%delta_matrix_1 = zeros(size(delta_2*a_1'));
+	%delta_matrix_2 = zeros(size(delta_3*a_2'));
+
+	delta_matrix_1 += (delta_2*a_1');
+	delta_matrix_2 += (delta_3*a_2');
 
 end
 
+% === get unregularized gradient for nn === %
+Theta1_grad = delta_matrix_1/m;
+Theta2_grad = delta_matrix_2/m;
 
 % -------------------------------------------------------------
 
