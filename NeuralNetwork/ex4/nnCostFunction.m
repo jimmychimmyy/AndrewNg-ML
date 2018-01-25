@@ -177,6 +177,18 @@ end
 Theta1_grad = delta_matrix_1/m;
 Theta2_grad = delta_matrix_2/m;
 
+for i = 1:rows(Theta1_grad)
+	for j = 2:columns(Theta1_grad)
+		Theta1_grad(i, j) = (Theta1_grad(i, j) + (lambda/m)*Theta1(i, j));
+	end
+end
+
+for i = 1:rows(Theta2_grad)
+	for j = 2:columns(Theta2_grad)
+		Theta2_grad(i, j) = (Theta2_grad(i, j) + (lambda/m)*Theta2(i, j));
+	end
+end
+
 % -------------------------------------------------------------
 
 % =========================================================================
