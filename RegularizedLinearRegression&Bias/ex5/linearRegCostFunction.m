@@ -18,20 +18,20 @@ grad = zeros(size(theta));
 %
 %               You should set J to the cost and grad to the gradient.
 %
-
-size(X)		%12x2
-size(y)		%12x1
-size(theta)	%2x1
-
+% === reg cost === %
 J = (1/(2*m)) * sum(((X*theta - y)).^2);
-theta = theta(2:end);					% remove theta_zero term (first row)
-J += (lambda/(2*m)) * sum(theta.^2); 
+theta_2 = theta(2:end);							% remove first row from theta
+J += (lambda/(2*m)) * sum(theta_2.^2); 
 
-
-
-
-
-
+% === gradient === %
+for i = 1:m
+	grad(1) += ((theta(1) + theta(2) * X(i, 2)) - y(i)) * X(i, 1);
+	grad(2) += ((theta(1) + theta(2) * X(i, 2)) - y(i)) * X(i, 2);
+end
+grad = grad/m;
+for j = 1:rows(theta)
+	grad(2) += (lambda/m) * theta(j);
+end
 
 % =========================================================================
 
