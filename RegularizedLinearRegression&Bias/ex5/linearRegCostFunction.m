@@ -24,10 +24,12 @@ theta_2 = theta(2:end);							% remove first row from theta
 J += (lambda/(2*m)) * sum(theta_2.^2); 
 
 % === gradient === %
+% === for j = 0 === %
 for i = 1:m
 	grad(1) += ((theta(1) + theta(2) * X(i, 2)) - y(i)) * X(i, 1);
 end
 
+% === for j >= 1 === %
 for j = 2:rows(theta)
 	for i = 1:m
 		grad(j) += ((theta(1) + theta(2) * X(i, 2)) - y(i)) * X(i, j) + (lambda/m) * theta(j);
