@@ -15,11 +15,16 @@ X_poly = zeros(numel(X), p);
 %
 % 
 
-for i = 1:rows(X_poly)
-	for j = 1:columns(X_poly)
-		X_poly(i, j) = (X(i)).^i;
-	end
+%size(X)			% = 12x1
+%p					% = 8
+
+final_matrix = X;
+for i = 2:p
+	matrix = X.^(i);
+	final_matrix = horzcat(final_matrix, matrix);
 end
+
+X_poly = final_matrix;
 
 % =========================================================================
 
