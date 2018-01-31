@@ -20,8 +20,8 @@ X_poly = zeros(numel(X), p);
 
 final_matrix = X;
 for i = 2:p
-	matrix = X.^(i);
-	final_matrix = horzcat(final_matrix, matrix);
+	ith_col = X.^(i);
+	final_matrix = horzcat(final_matrix, ith_col);
 end
 
 X_poly = final_matrix;
