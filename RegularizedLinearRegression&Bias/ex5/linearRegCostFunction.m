@@ -26,11 +26,11 @@ J += (lambda/(2*m)) * sum(theta_2.^2);
 % === gradient === %
 % === for j = 0 === %
 h_zero = sum((X*theta - y) .* X(:, 1));
-grad(1) = h_zero(1)/m;
+grad(1) = h_zero/m;
 
 % === for j >= 1 === %
 for j = 2:rows(theta)
-	h_j = (1/m) * sum((X*theta - y) .* X(:, j)) + (lambda/m) * theta(j);
+	h_j = ((1/m) * sum((X*theta - y) .* X(:, j))) + ((lambda/m) * theta(j));
 	grad(j) = h_j;
 end
 
