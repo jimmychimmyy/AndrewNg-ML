@@ -23,9 +23,21 @@ sigma = 0.3;
 %        mean(double(predictions ~= yval))
 %
 
+test_C = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
+test_sigma = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
 
 
+% predictions is vetor containing all predictions from SVM
+predictions = svmPredict(svmTrain(Xval, yval, C, @linearKernel, 1e-3, 20), Xval)
+mean(double(predictions ~= yval))
 
+% need to try with different values of C and sigma
+for i = 1:len(test_C)
+	for j = 1:len(test_sigma)
+		predictions = svmPredict(svmTrain(Xval, yval, test_C, @linearKernel, 1e-3, 20), Xval)
+		mean(double(predictions ~= yval))
+	end
+end
 
 
 
