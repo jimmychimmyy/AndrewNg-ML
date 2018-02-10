@@ -23,22 +23,40 @@ sigma = 0.3;
 %        mean(double(predictions ~= yval))
 %
 
+% uncomment following block to compute optimum C and sigma
+%{ 
 test_C = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
 test_sigma = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
 
+prediction = svmPredict(svmTrain(Xval, yval, C, @(Xval, yval) gaussianKernel(Xval, yval, sigma)), Xval);
+min_err = mean(double(prediction ~= yval))
 
 % predictions is vetor containing all predictions from SVM
-predictions = svmPredict(svmTrain(Xval, yval, C, @linearKernel, 1e-3, 20), Xval)
-mean(double(predictions ~= yval))
-
 % need to try with different values of C and sigma
-for i = 1:len(test_C)
-	for j = 1:len(test_sigma)
-		predictions = svmPredict(svmTrain(Xval, yval, test_C, @linearKernel, 1e-3, 20), Xval)
-		mean(double(predictions ~= yval))
+% we are minimizing error, therefore we want the smallest
+for i = 1:numel(test_C)
+	for j = 1:numel(test_sigma)
+		%test_C(i)
+		%test_sigma(j)
+		predictions = svmPredict(svmTrain(Xval, yval, test_C(i), @(Xval, yval) gaussianKernel(Xval, yval, test_sigma(j))), Xval);
+		err = mean(double(predictions ~= yval))
+		if (err < min_err)
+			C = test_C(i);
+			sigma = test_sigma(j);
+			min_err = err;
+		end
 	end
 end
 
+min_err
+C
+sigma
+
+%}
+
+% found that smallest error is when C = 10 and sigma = 0.03
+C = 10;
+sigma = 0.03;
 
 
 % =========================================================================
