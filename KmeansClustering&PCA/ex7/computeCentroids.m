@@ -26,12 +26,29 @@ centroids = zeros(K, n);
 % Note: You can use a for-loop over the centroids to compute this.
 %
 
+concat = horzcat(idx, X);
+sort(concat);
 
+for i = 1:K
+	ind = concat(:, 1) == i;
+	A = concat(ind, :);
+	centroids(i, 1) = sum(A(:, 2))/rows(A);
+	centroids(i, 2) = sum(A(:, 3))/rows(A);
+end
 
+%{
+ind1 = concat(:, 1) == 1;
+ind2 = concat(:, 1) == 2;
+ind3 = concat(:, 1) == 3;
 
+A1 = concat(ind1, :)
+A2 = concat(ind2, :)
+A3 = concat(ind3, :)
 
+centroids(3, 1) = sum(A3(:, 2))/rows(A3)
+centroids(3, 2) = sum(A3(:, 3))/rows(A3)
 
-
+%}
 
 % =============================================================
 
