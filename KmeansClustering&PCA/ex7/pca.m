@@ -20,8 +20,11 @@ S = zeros(n);
 %       number of examples).
 %
 
+% computing the covariance matrix of the data
+Sigma = (1/m) * X' * X;
 
-
+% compute eigenvectors and diagonal matrix
+[U, S, V] = svd(Sigma);
 
 
 
